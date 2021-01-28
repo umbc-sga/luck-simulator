@@ -1,0 +1,82 @@
+<html>
+    <head>
+        <title>Luck Simulator</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+        <style>
+            html {
+                font-family: sans-serif;
+            }
+
+            #doggo {
+                width: 50vw;
+            }
+
+            #hand {
+                width: 25vw;
+                position: absolute;
+                z-index: 1;
+                cursor: move;
+            }
+        </style>
+    </head>
+
+    <body>
+        <div style="text-align: center">
+            <h1 >Virtually rub True Grit's nose for good luck!</h1>
+            <p>
+                Lowkey broken on mobile, so try on a computer to drag the hand around to rub True Grit's nose.
+            </p>
+        
+            <p>
+                <img id="doggo" src="true-grit.jpg">
+                <img id="hand"  src="hand.png">
+            </p>
+        </div>
+       
+
+        <p class="footer">
+            Blatant rip-off of <a href="https://ellielitwack.github.io/testudosimulator/">this</a>.
+        </p>
+
+        <script>
+            // make the hand image draggable
+            const el = document.getElementById("hand");
+
+            let pos1 = 0, pos2 = 0, pos3 = 0, pos4 = 0;
+            
+            el.onmousedown = e => {
+                e = e || window.event;
+                e.preventDefault();
+
+                // get the mouse cursor position at startup:
+                pos3 = e.clientX;
+                pos4 = e.clientY;
+
+                // when dragging stops, clear event listeners
+                document.onmouseup = () => {
+                    document.onmouseup = null;
+                    document.onmousemove = null;
+                }
+
+                // call a function whenever the cursor moves:
+                document.onmousemove = elementDrag;
+            }
+
+            function elementDrag(e) {
+                e = e || window.event;
+                e.preventDefault();
+
+                // calculate the new cursor position:
+                pos1 = pos3 - e.clientX;
+                pos2 = pos4 - e.clientY;
+                pos3 = e.clientX;
+                pos4 = e.clientY;
+
+                // set the element's new position:
+                el.style.top = (el.offsetTop - pos2) + "px";
+                el.style.left = (el.offsetLeft - pos1) + "px";
+            }
+        </script>
+    </body>
+</html>
